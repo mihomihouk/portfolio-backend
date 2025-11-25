@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import { db } from '../db';
+import { isBotUser } from '../utils/bot-detection';
 
 const router = Router();
 
@@ -10,10 +11,19 @@ router.post('/', async (req, res) => {
     if (!event || !path) {
       return res.status(400).json({ error: 'Event and path are required' });
     }
+
+    if (userAgent && ip) {
+      const isBot = await isBotUser(userAgent, ip);
+      if (isBot) {
+        return res.status(403).json({ error: 'Bot user detected' });
+      }
+    }
+
     await db.query(
       'INSERT INTO logs (event, path, referrer, user_agent, ip) VALUES ($1, $2, $3, $4, $5)',
       [event, path, referrer, userAgent, ip]
     );
+
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error('Error logging event:', err);
