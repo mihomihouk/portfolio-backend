@@ -1,1 +1,0 @@
-## Bot Detection For Logging
