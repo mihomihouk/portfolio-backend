@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
     if (!event || !path) {
       return res.status(400).json({ error: 'Event and path are required' });
     }
-    const result = await db.query(
+    await db.query(
       'INSERT INTO logs (event, path, referrer, user_agent, ip) VALUES ($1, $2, $3, $4, $5)',
       [event, path, referrer, userAgent, ip]
     );
