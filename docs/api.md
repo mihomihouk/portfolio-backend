@@ -46,7 +46,8 @@ Log an event.
 
 - 403 if it's a bot
 
-**Bot Detection**
+**Bot Detection:**
+
 The logging API includes logic to exclude bot traffic from being recorded. Bots are identified based on the following criteria:
 
 1. User-Agent Patterns
