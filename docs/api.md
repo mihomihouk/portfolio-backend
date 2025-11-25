@@ -43,3 +43,15 @@ Log an event.
 ```json
 { "ok": true }
 ```
+
+- 403 if it's a bot
+
+**Bot Detection:**
+
+The logging API includes logic to exclude bot traffic from being recorded. Bots are identified based on the following criteria:
+
+1. User-Agent Patterns
+   Requests are checked against a curated list of known bot User-Agent strings.
+
+2. IP Blacklist
+   Requests from blacklisted IPs are considered bot traffic.
