@@ -5,6 +5,8 @@ import logRouter from './routes/log.route';
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.set('trust proxy', true);
+
 app.use(cors());
 app.use(express.json());
 
