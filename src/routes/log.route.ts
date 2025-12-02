@@ -7,13 +7,14 @@ const router = Router();
 
 router.post('/', async (req, res) => {
   try {
-    const { event, path, referrer, userAgent, ip } = req.body;
+    const { event, path, referrer, userAgent } = req.body;
+
     if (!event || !path) {
       return res.status(400).json({ error: 'Event and path are required' });
     }
 
-    if (userAgent && ip) {
-      const isBot = await isBotUser(userAgent, ip);
+    if (userAgent && req.ip) {
+      const isBot = await isBotUser(userAgent, req.ip);
       if (isBot) {
         return res.status(403).json({ error: 'Bot user detected' });
       }
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
 
     await db.query(
       'INSERT INTO logs (event, path, referrer, user_agent, ip) VALUES ($1, $2, $3, $4, $5)',
-      [event, path, referrer, userAgent, ip]
+      [event, path, referrer, userAgent, req.ip]
     );
 
     return res.status(200).json({ ok: true });

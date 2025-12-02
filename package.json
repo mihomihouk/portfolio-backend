@@ -29,6 +29,7 @@
     "crawler-user-agents": "^1.22.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "ipapi.co": "^0.3.0",
     "pg": "^8.16.3"
   }
 }
