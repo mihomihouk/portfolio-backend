@@ -6,6 +6,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "dev": "nodemon --exec ts-node src/index.ts",
+    "migrate": "npx ts-node src/db/migrate.ts",
     "build": "tsc",
     "start": "node dist/index.js"
   },
@@ -16,7 +17,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.5",
-    "@types/pg": "^8.15.6",
+    "@types/node": "^24.10.1",
     "@types/supertest": "^6.0.3",
     "nodemon": "^3.1.11",
     "supertest": "^7.1.4",
@@ -30,6 +31,6 @@
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "ipapi.co": "^0.3.0",
-    "pg": "^8.16.3"
+    "mysql2": "^3.15.3"
   }
 }
