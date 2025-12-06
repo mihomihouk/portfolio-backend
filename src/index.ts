@@ -7,7 +7,19 @@ const port = process.env.PORT || 4000;
 
 app.set('trust proxy', true);
 
-app.use(cors());
+const whiteList = (process.env.ALLOWED_ORIGINS ||'').split(',').map(origin => origin.trim())
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin) return callback(new Error('CORS policy requires an origin header'), false);
+    if (whiteList.indexOf(origin) !== -1) {
+      return callback(null, true)
+    } else {
+      return callback(new Error('Not allowed by CORS'))
+    }
+  }
+}));
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
