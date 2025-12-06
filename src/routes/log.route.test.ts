@@ -14,13 +14,12 @@ app.use('/api/log', logRouter);
 vi.mock('../db', () => ({
   db: {
     query: vi.fn(),
-    execute: vi.fn()
   },
 }));
 
 function setupDatabaseError() {
   // Make the database throw an error
-  (db.execute as Mock).mockRejectedValue(new Error('Database error'));
+  (db.query as Mock).mockRejectedValue(new Error('Database error'));
   // Suppress console.error output not to pollute the test output
   vi.spyOn(console, 'error').mockImplementation(() => {});
 }
@@ -92,7 +91,7 @@ describe('Log Route', () => {
       const mockVisitorCount = [{ date: '2024-12-05', visits: 42 }]
       const mockPagePopularity = [{ page: '/', visits: 100 }]
 
-      ;(db.execute as Mock)
+      ;(db.query as Mock)
       .mockResolvedValueOnce([mockVisitorCount])
       .mockResolvedValueOnce([mockPagePopularity])
 
