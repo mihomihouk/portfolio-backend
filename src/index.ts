@@ -11,7 +11,7 @@ const whiteList = (process.env.ALLOWED_ORIGINS ||'').split(',').map(origin => or
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(new Error('CORS policy requires an origin header'), false);
+    if (!origin) return callback(null, true);
     if (whiteList.indexOf(origin) !== -1) {
       return callback(null, true)
     } else {
