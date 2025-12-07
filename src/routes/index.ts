@@ -1,4 +1,4 @@
-import logRouter from './log.route';
-import analyticsRouter from './analytics.route';
+import logRouter from './log.route'
+import analyticsRouter from './analytics.route'
 
-export { logRouter, analyticsRouter };
+export { logRouter, analyticsRouter }

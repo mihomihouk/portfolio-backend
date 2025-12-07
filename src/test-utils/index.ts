@@ -1,2 +1,2 @@
-export * from './db-mock';
-export * from './test-app';
+export * from './db-mock'
+export * from './test-app'
