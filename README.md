@@ -21,6 +21,7 @@ Backend API for my portfolio website. Provides event logging and visitor analyti
 - Event logging API
 - Visitor analytics API (daily counts, page popularity)
 - Bot detection (User-Agent patterns, IP filtering)
+- Automated cleanup of logs older than 60 days (via Supabase pg_cron)
 
 ## API Documentation
 
