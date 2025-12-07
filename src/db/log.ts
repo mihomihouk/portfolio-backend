@@ -23,8 +23,9 @@ export function logEvent({
   );
 }
 
-export function getVisitorCount({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
-  return db.query(
+export async function getVisitorCount({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
+    
+  const result = await db.query(
     `
     SELECT 
         COUNT(id) AS visits,
@@ -32,26 +33,30 @@ export function getVisitorCount({ daysAgo = 30 }: { daysAgo?: number | undefined
     FROM logs
     WHERE event = 'page_view'
       AND path = '/'
-      AND created_at >= NOW() - INTERVAL '$1 days'
+      AND created_at >= NOW() - ($1 || ' days')::interval
     GROUP BY DATE(created_at)
     ORDER BY DATE(created_at)
     `,
     [daysAgo]
   );
+
+  return result.rows 
 }
 
-export function getPagePopularity({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
-  return db.query(
+export async function getPagePopularity({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
+  const result = await db.query(
     `
     SELECT
         COUNT(id) AS visits,
         path AS page
     FROM logs
     WHERE event = 'page_view'
-      AND created_at >= NOW() - INTERVAL '$1 days'
+      AND created_at >= NOW() - ($1 || ' days')::interval
     GROUP BY path
     ORDER BY visits DESC
     `,
     [daysAgo]
   );
+
+  return result.rows
 }

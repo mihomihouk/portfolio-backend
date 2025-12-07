@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { isBotUser } from '../utils/bot-detection';
-import { getVisitorCount, logEvent, getPagePopularity } from '../db/log';
+import { logEvent } from '../db/log';
 
 const router = Router();
 
@@ -26,19 +26,5 @@ router.post('/', async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 });
-
-router.get('/visitor-analytics', async(req, res)=>{
-  try{
-    const daysAgo = req.query.daysAgo ? Number(req.query.daysAgo) : undefined
-    const [visitorCount, pagePopularity] = await Promise.all([
-      getVisitorCount({daysAgo}),
-      getPagePopularity({daysAgo})
-    ])
-    return res.status(200).json({ visitorCount, pagePopularity })
-  }catch(err){
-    console.error(`Error getting visitor analytics:`, err)
-    return res.status(500).json({error: 'Internal server error'})
-  }
-})
 
 export default router;
