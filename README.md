@@ -4,9 +4,9 @@
 
 Backend API for my portfolio website. Provides event logging and visitor analytics endpoints to power the public-facing analytics dashboard. Includes bot detection to filter out non-human traffic.
 
-## Link
+## Related Repository
 
-- [Portfolio Website](https://mihoinagaki.com/)
+- [Frontend](https://github.com/mihomihouk/Portfolio_Website)
 
 ## Languages, Libraries, Frameworks, Tools
 
@@ -29,24 +29,14 @@ For full API documentation, see [docs/api.md](docs/api.md)
 ## Scripts
 
 ### Development
-
+```
 npm run dev
-
-### Run tests
-
-npm test
-
-### Build for production
-
-npm run build
-
-### Start production server
-
-npm start
+```
 
 ### Run database migrations
-
+```
 npm run migrate
+```
 
 ## Development
 
