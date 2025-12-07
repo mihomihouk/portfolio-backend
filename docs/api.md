@@ -6,7 +6,7 @@ This API logs user events to the database.
 
 ## Base URL
 
-`http://localhost:4000/api`
+`<server-url>/api`
 
 ## Endpoints
 
@@ -55,3 +55,44 @@ The logging API includes logic to exclude bot traffic from being recorded. Bots 
 
 2. IP Blacklist
    Requests from blacklisted IPs are considered bot traffic.
+
+### GET /visitor-analytics
+
+Get visitor statistics and page popularity data.
+
+**Query Parameters:**
+
+| Parameter | Type   | Required | Default | Description                 |
+| --------- | ------ | -------- | ------- | --------------------------- |
+| daysAgo   | number | no       | 30      | Number of days to look back |
+
+**Example Request:**
+
+```json
+
+GET /api/visitor-analytics?daysAgo=7
+
+```
+
+**Responses:**
+
+- 200 if success
+
+```
+{
+  "visitorCount": [
+    { "visits": "42", "date": "2024-12-01" },
+    { "visits": "38", "date": "2024-12-02" }
+  ],
+  "pagePopularity": [
+    { "visits": "100", "page": "/" },
+    { "visits": "45", "page": "/projects" }
+  ]
+}
+```
+
+- 500 if server error
+
+```
+{ "error": "Internal server error" }
+```
