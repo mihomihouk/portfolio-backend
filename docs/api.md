@@ -56,16 +56,15 @@ The logging API includes logic to exclude bot traffic from being recorded. Bots 
 2. IP Blacklist
    Requests from blacklisted IPs are considered bot traffic.
 
-
 ### GET /visitor-analytics
 
 Get visitor statistics and page popularity data.
 
 **Query Parameters:**
 
-| Parameter | Type   | Required | Default | Description                        |
-| --------- | ------ | -------- | ------- | ---------------------------------- |
-| daysAgo   | number | no       | 30      | Number of days to look back        |
+| Parameter | Type   | Required | Default | Description                 |
+| --------- | ------ | -------- | ------- | --------------------------- |
+| daysAgo   | number | no       | 30      | Number of days to look back |
 
 **Example Request:**
 
@@ -93,6 +92,7 @@ GET /api/visitor-analytics?daysAgo=7
 ```
 
 - 500 if server error
+
 ```
 { "error": "Internal server error" }
 ```

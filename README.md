@@ -29,19 +29,25 @@ For full API documentation, see [docs/api.md](docs/api.md)
 ## Scripts
 
 ### Development
+
 npm run dev
 
 ### Run tests
+
 npm test
 
 ### Build for production
+
 npm run build
 
 ### Start production server
+
 npm start
 
 ### Run database migrations
+
 npm run migrate
 
 ## Development
+
 - Developer: Miho Inagaki
