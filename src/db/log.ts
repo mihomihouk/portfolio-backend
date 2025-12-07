@@ -1,17 +1,17 @@
-import { db } from './index';
+import { db } from './index'
 
 export function logEvent({
   event,
   path,
   referrer,
   userAgent,
-  ip,
+  ip
 }: {
-  event: string;
-  path: string;
-  referrer: string;
-  userAgent: string;
-  ip?: string | undefined;
+  event: string
+  path: string
+  referrer: string
+  userAgent: string
+  ip?: string | undefined
 }) {
   return db.query(
     `
@@ -20,11 +20,14 @@ export function logEvent({
     RETURNING id
     `,
     [event, path, referrer, userAgent, ip || null]
-  );
+  )
 }
 
-export async function getVisitorCount({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
-    
+export async function getVisitorCount({
+  daysAgo = 30
+}: {
+  daysAgo?: number | undefined
+}) {
   const result = await db.query(
     `
     SELECT 
@@ -38,12 +41,16 @@ export async function getVisitorCount({ daysAgo = 30 }: { daysAgo?: number | und
     ORDER BY DATE(created_at)
     `,
     [daysAgo]
-  );
+  )
 
-  return result.rows 
+  return result.rows
 }
 
-export async function getPagePopularity({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
+export async function getPagePopularity({
+  daysAgo = 30
+}: {
+  daysAgo?: number | undefined
+}) {
   const result = await db.query(
     `
     SELECT
@@ -56,7 +63,7 @@ export async function getPagePopularity({ daysAgo = 30 }: { daysAgo?: number | u
     ORDER BY visits DESC
     `,
     [daysAgo]
-  );
+  )
 
   return result.rows
 }
