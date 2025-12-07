@@ -29,11 +29,13 @@ For full API documentation, see [docs/api.md](docs/api.md)
 ## Scripts
 
 ### Development
+
 ```
 npm run dev
 ```
 
 ### Run database migrations
+
 ```
 npm run migrate
 ```
