@@ -19,7 +19,7 @@ export async function logUserActivity(req: Request, res: Response) {
       return res.status(403).json({ error: 'Bot user detected' })
     }
 
-    return res.status(200).json({ ok: true })
+    return res.status(201).json({ ok: true })
   } catch (err) {
     console.error('Error logging event:', err)
     return res.status(500).json({ error: 'Internal server error' })

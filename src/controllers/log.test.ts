@@ -50,12 +50,12 @@ describe('Log Route', () => {
     expect(response.status).toBe(403)
   })
 
-  it('should return 200 if log is successful', async () => {
+  it('should return 201 if log is successful', async () => {
     const response = await makePostRequest({
       event: 'test',
       path: 'test'
     })
-    expect(response.status).toBe(200)
+    expect(response.status).toBe(201)
     expect(response.body).toEqual({ ok: true })
   })
 
