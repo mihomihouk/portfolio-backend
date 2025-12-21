@@ -22,7 +22,7 @@ The backend follows a layered MVC-inspired architecture commonly used in product
 
 ### MVC + Service Layer
 
-- **Controllers / Routes**:  Handle HTTP requests, validation, and responses.
+- **Controllers / Routes**: Handle HTTP requests, validation, and responses.
 - **Services**: Contain business logic and coordinate repositories and utilities.
 - **Repositories**: Encapsulate database access and SQL queries.
 - **Models**: Represent domain entities (e.g. Log) when domain-level behavior is needed.
