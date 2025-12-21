@@ -4,8 +4,8 @@ import logRouter from '../routes/log.route'
 import * as botDetection from '../utils/bot-detection'
 import { createTestApp, setupDatabaseError } from '../test-utils'
 import { db } from '../db'
-
-const app = createTestApp('/api/log', logRouter)
+import { analyticsRouter } from '../routes'
+import * as logRepo from '../repositories/log.repository'
 
 vi.mock('../db', () => ({
   db: {
@@ -14,6 +14,7 @@ vi.mock('../db', () => ({
 }))
 
 describe('Log Route', () => {
+  const app = createTestApp('/api/log', logRouter)
   beforeAll(() => {
     vi.clearAllMocks()
   })
@@ -64,6 +65,48 @@ describe('Log Route', () => {
       event: 'test',
       path: 'test'
     })
+    expect(response.status).toBe(500)
+    expect(response.body).toEqual({ error: 'Internal server error' })
+  })
+})
+
+describe('Analytics Route', () => {
+  const app = createTestApp('/api/visitor-analytics', analyticsRouter)
+
+  beforeAll(() => {
+    vi.clearAllMocks()
+  })
+
+  function getVisitorAnalyticsRequest(daysAgo: number) {
+    return request(app).get('/api/visitor-analytics').query({ daysAgo })
+  }
+
+  it('should return daily visitor counts and page popularity data', async () => {
+    const mockVisitorCount = [{ date: '2024-12-05', visits: 42 }]
+    const mockPagePopularity = [{ page: '/', visits: 100 }]
+
+    vi.spyOn(
+      logRepo.LogRepository.prototype,
+      'getVisitorCount'
+    ).mockResolvedValueOnce([mockVisitorCount])
+    vi.spyOn(
+      logRepo.LogRepository.prototype,
+      'getPagePopularity'
+    ).mockResolvedValueOnce([mockPagePopularity])
+
+    const response = await getVisitorAnalyticsRequest(5)
+    expect(response.status).toBe(200)
+
+    expect(response.body).toEqual({
+      visitorCount: [mockVisitorCount],
+      pagePopularity: [mockPagePopularity]
+    })
+  })
+
+  it('should return 500 if database throws an error', async () => {
+    setupDatabaseError(db)
+
+    const response = await getVisitorAnalyticsRequest(25)
     expect(response.status).toBe(500)
     expect(response.body).toEqual({ error: 'Internal server error' })
   })
