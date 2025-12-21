@@ -16,13 +16,15 @@ describe('Log Service', () => {
 
       const service = new LogService(mockRepo)
 
-      const result = await service.logUserActivity({
-        event: 'page_view',
-        path: '/',
-        referrer: '',
-        userAgent: 'Mozilla',
-        ip: '1.1.1.1'
-      })
+      const result = await service.logUserActivity(
+        {
+          event: 'page_view',
+          path: '/',
+          referrer: '',
+          userAgent: 'Mozilla'
+        },
+        '1.1.1.1'
+      )
 
       expect(result).toBe(true)
       expect(mockRepo.logEvent).toHaveBeenCalledOnce()
@@ -33,13 +35,15 @@ describe('Log Service', () => {
 
       const service = new LogService(mockRepo)
 
-      const result = await service.logUserActivity({
-        event: 'page_view',
-        path: '/',
-        referrer: '',
-        userAgent: 'bot',
-        ip: '1.1.1.1'
-      })
+      const result = await service.logUserActivity(
+        {
+          event: 'page_view',
+          path: '/',
+          referrer: '',
+          userAgent: 'bot'
+        },
+        '1.1.1.1'
+      )
 
       expect(result).toBe(false)
       expect(mockRepo.logEvent).not.toHaveBeenCalled()

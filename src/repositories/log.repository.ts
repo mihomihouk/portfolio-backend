@@ -10,9 +10,9 @@ export class LogRepository {
   }: {
     event: string
     path: string
-    referrer: string
+    referrer?: string
     userAgent: string
-    ip?: string | undefined
+    ip?: string
   }) {
     await db.query(
       `
@@ -23,7 +23,7 @@ export class LogRepository {
     )
   }
 
-  async getVisitorCount({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
+  async getVisitorCount({ daysAgo }: { daysAgo: number }) {
     const result = await db.query(
       `
     SELECT 
@@ -42,7 +42,7 @@ export class LogRepository {
     return result.rows
   }
 
-  async getPagePopularity({ daysAgo = 30 }: { daysAgo?: number | undefined }) {
+  async getPagePopularity({ daysAgo }: { daysAgo: number }) {
     const result = await db.query(
       `
     SELECT

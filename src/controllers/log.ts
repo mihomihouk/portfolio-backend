@@ -1,3 +1,4 @@
+import { LogEventInput } from '../dtos/log.dto'
 import { LogRepository } from '../repositories/log.repository'
 import { LogService } from '../services/log.service'
 import { Request, Response } from 'express'
@@ -6,15 +7,9 @@ const logService = new LogService(new LogRepository())
 
 export async function logUserActivity(req: Request, res: Response) {
   try {
-    const { event, path, referrer, userAgent } = req.body
+    const data: LogEventInput = req.body
+    const success = await logService.logUserActivity(data, req.ip)
 
-    if (!event || !path) {
-      return res.status(400).json({ error: 'Event and path are required' })
-    }
-
-    const logData = { event, path, referrer, userAgent, ip: req.ip }
-
-    const success = await logService.logUserActivity(logData)
     if (!success) {
       return res.status(403).json({ error: 'Bot user detected' })
     }
@@ -28,10 +23,9 @@ export async function logUserActivity(req: Request, res: Response) {
 
 export async function getUserActivityLog(req: Request, res: Response) {
   try {
-    const daysAgo = req.query.daysAgo ? Number(req.query.daysAgo) : 30
-
-    const [visitorCount, pagePopularity] =
-      await logService.getUserActivityLog(daysAgo)
+    const [visitorCount, pagePopularity] = await logService.getUserActivityLog(
+      Number(req.query.daysAgo) || 30
+    )
 
     return res.status(200).json({ visitorCount, pagePopularity })
   } catch (err) {
