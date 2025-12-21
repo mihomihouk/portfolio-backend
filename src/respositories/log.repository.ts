@@ -1,6 +1,6 @@
-import { db } from './index'
+import { db } from '../db/index'
 
-export function logEvent({
+export async function logEvent({
   event,
   path,
   referrer,
@@ -13,11 +13,10 @@ export function logEvent({
   userAgent: string
   ip?: string | undefined
 }) {
-  return db.query(
+  await db.query(
     `
     INSERT INTO logs (event, path, referrer, user_agent, ip)
     VALUES ($1, $2, $3, $4, $5)
-    RETURNING id
     `,
     [event, path, referrer, userAgent, ip || null]
   )

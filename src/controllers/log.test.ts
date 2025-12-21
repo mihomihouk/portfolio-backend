@@ -1,6 +1,6 @@
 import { describe, it, beforeAll, vi, expect } from 'vitest'
 import request from 'supertest'
-import logRouter from './log.route'
+import logRouter from '../routes/log.route'
 import * as botDetection from '../utils/bot-detection'
 import { createTestApp, setupDatabaseError } from '../test-utils'
 import { db } from '../db'
