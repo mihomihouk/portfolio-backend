@@ -4,11 +4,7 @@
 
 Backend API for my portfolio website. Provides event logging and visitor analytics endpoints to power the public-facing analytics dashboard. Includes bot detection to filter out non-human traffic.
 
-The backend is structured following the MVC pattern:
-
-- Models: Represent domain entities such as Log.
-- Repositories: Handle database access and queries.
-- Controllers / Routes: Handle HTTP requests, validation and responses.
+The backend follows a layered MVC-inspired architecture commonly used in production APIs.
 
 ## Related Repository
 
@@ -21,6 +17,35 @@ The backend is structured following the MVC pattern:
 - TypeScript
 - PostgreSQL
 - Vitest
+
+## Architecture
+
+### MVC + Service Layer
+
+- **Controllers / Routes**:  Handle HTTP requests, validation, and responses.
+- **Services**: Contain business logic and coordinate repositories and utilities.
+- **Repositories**: Encapsulate database access and SQL queries.
+- **Models**: Represent domain entities (e.g. Log) when domain-level behavior is needed.
+
+### Dependency Injection
+
+The project uses constructor-based dependency injection to decouple components:
+
+- Services receive repositories via constructors
+- Improves testability and separation of concerns
+- Allows easy mocking in unit tests
+
+DI is implemented manually to keep the codebase lightweight and explicit.
+
+### Data Transfer Objects (DTOs)
+
+DTOs define clear, typed contracts at API boundaries and between layers.
+
+- Validate request bodies and query parameters
+- Enforce consistent data shapes
+- Improve type safety and maintainability
+
+Validation is performed via middleware before reaching controllers or services.
 
 ## Main Functions
 
