@@ -1,5 +1,5 @@
 import { isBotUser } from '../utils/bot-detection'
-import { logEvent } from '../db/log'
+import { logEvent } from '../respositories/log.repository'
 import { Request, Response } from 'express'
 
 export async function logUserActivity(req: Request, res: Response){

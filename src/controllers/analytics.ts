@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { getVisitorCount, getPagePopularity } from "../db/log"
+import { getVisitorCount, getPagePopularity } from "../respositories/log.repository"
 
 export async function getUserActivityLog(req: Request, res: Response){
     try {

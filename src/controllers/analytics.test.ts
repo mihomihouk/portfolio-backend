@@ -3,7 +3,7 @@ import request from 'supertest'
 import { createTestApp, setupDatabaseError } from '../test-utils'
 import { db } from '../db'
 import { analyticsRouter } from '../routes'
-import * as logDB from '../db/log'
+import * as logDB from '../respositories/log.repository'
 
 const app = createTestApp('/api/visitor-analytics', analyticsRouter)
 
