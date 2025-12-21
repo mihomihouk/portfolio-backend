@@ -10,9 +10,9 @@ export class LogRepository {
   }: {
     event: string
     path: string
-    referrer: string
+    referrer?: string 
     userAgent: string
-    ip?: string | undefined
+    ip?: string
   }) {
     await db.query(
       `

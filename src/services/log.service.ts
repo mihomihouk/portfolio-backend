@@ -1,20 +1,15 @@
+import { LogEventInput } from '../dtos/log.dto'
 import { LogRepository } from '../repositories/log.repository'
 import { isBotUser } from '../utils/bot-detection'
 
 export class LogService {
   constructor(private logRepo: LogRepository) {}
-  async logUserActivity(data: {
-    event: string
-    path: string
-    referrer: string
-    userAgent: string
-    ip?: string | undefined
-  }) {
-    if (data.userAgent && data.ip) {
-      const isBot = await isBotUser(data.userAgent, data.ip)
+  async logUserActivity(data: LogEventInput, ip?: string) {
+    if (data.userAgent && ip) {
+      const isBot = await isBotUser(data.userAgent, ip)
       if (isBot) return false
     }
-    await this.logRepo.logEvent(data)
+    await this.logRepo.logEvent({...data, ip})
     return true
   }
 

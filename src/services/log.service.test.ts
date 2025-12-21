@@ -21,8 +21,7 @@ describe('Log Service', () => {
         path: '/',
         referrer: '',
         userAgent: 'Mozilla',
-        ip: '1.1.1.1'
-      })
+      }, '1.1.1.1')
 
       expect(result).toBe(true)
       expect(mockRepo.logEvent).toHaveBeenCalledOnce()
@@ -38,8 +37,7 @@ describe('Log Service', () => {
         path: '/',
         referrer: '',
         userAgent: 'bot',
-        ip: '1.1.1.1'
-      })
+      }, '1.1.1.1')
 
       expect(result).toBe(false)
       expect(mockRepo.logEvent).not.toHaveBeenCalled()
