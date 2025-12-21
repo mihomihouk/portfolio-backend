@@ -7,7 +7,6 @@ const logService = new LogService(new LogRepository())
 
 export async function logUserActivity(req: Request, res: Response) {
   try {
-
     const data: LogEventInput = req.body
     const success = await logService.logUserActivity(data, req.ip)
 
@@ -24,10 +23,9 @@ export async function logUserActivity(req: Request, res: Response) {
 
 export async function getUserActivityLog(req: Request, res: Response) {
   try {
-    const daysAgo = req.query.daysAgo ? Number(req.query.daysAgo) : 30
-
-    const [visitorCount, pagePopularity] =
-      await logService.getUserActivityLog(daysAgo)
+    const [visitorCount, pagePopularity] = await logService.getUserActivityLog(
+      Number(req.query.daysAgo) || 30
+    )
 
     return res.status(200).json({ visitorCount, pagePopularity })
   } catch (err) {

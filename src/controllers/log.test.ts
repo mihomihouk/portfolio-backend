@@ -1,3 +1,4 @@
+import { GetUserActivityLog } from './../dtos/log.dto'
 import { describe, it, beforeEach, vi, expect } from 'vitest'
 import request from 'supertest'
 import logRouter from '../routes/log.route'
@@ -34,7 +35,7 @@ describe('Log Route', () => {
     event: 'test',
     path: 'test',
     userAgent:
-      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
   }
 
   it.each(invalidPayload)(
@@ -70,11 +71,11 @@ describe('Analytics Route', () => {
   const app = createTestApp('/api/visitor-analytics', analyticsRouter)
 
   beforeEach(() => {
-    vi.clearAllMocks()
+    vi.restoreAllMocks()
   })
 
-  function getVisitorAnalyticsRequest(daysAgo: number) {
-    return request(app).get('/api/visitor-analytics').query({ daysAgo })
+  function getVisitorAnalyticsRequest(payload: GetUserActivityLog) {
+    return request(app).get('/api/visitor-analytics').query(payload)
   }
 
   it('should return daily visitor counts and page popularity data', async () => {
@@ -84,25 +85,25 @@ describe('Analytics Route', () => {
     vi.spyOn(
       logRepo.LogRepository.prototype,
       'getVisitorCount'
-    ).mockResolvedValueOnce([mockVisitorCount])
+    ).mockResolvedValue(mockVisitorCount)
     vi.spyOn(
       logRepo.LogRepository.prototype,
       'getPagePopularity'
-    ).mockResolvedValueOnce([mockPagePopularity])
+    ).mockResolvedValue(mockPagePopularity)
 
-    const response = await getVisitorAnalyticsRequest(5)
+    const response = await getVisitorAnalyticsRequest({ daysAgo: 5 })
     expect(response.status).toBe(200)
 
     expect(response.body).toEqual({
-      visitorCount: [mockVisitorCount],
-      pagePopularity: [mockPagePopularity]
+      visitorCount: mockVisitorCount,
+      pagePopularity: mockPagePopularity
     })
   })
 
   it('should return 500 if database throws an error', async () => {
     setupDatabaseError(db)
 
-    const response = await getVisitorAnalyticsRequest(25)
+    const response = await getVisitorAnalyticsRequest({ daysAgo: 25 })
     expect(response.status).toBe(500)
     expect(response.body).toEqual({ error: 'Internal server error' })
   })

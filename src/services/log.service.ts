@@ -9,7 +9,7 @@ export class LogService {
       const isBot = await isBotUser(data.userAgent, ip)
       if (isBot) return false
     }
-    await this.logRepo.logEvent({...data, ip})
+    await this.logRepo.logEvent({ ...data, ip })
     return true
   }
 
