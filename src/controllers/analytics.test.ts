@@ -13,8 +13,6 @@ vi.mock('../db', () => ({
   }
 }))
 
-
-
 describe('Analytics Route', () => {
   beforeAll(() => {
     vi.clearAllMocks()
@@ -28,8 +26,10 @@ describe('Analytics Route', () => {
     const mockVisitorCount = [{ date: '2024-12-05', visits: 42 }]
     const mockPagePopularity = [{ page: '/', visits: 100 }]
 
-      vi.spyOn(logDB, 'getVisitorCount').mockResolvedValueOnce([mockVisitorCount])
-      vi.spyOn(logDB, 'getPagePopularity').mockResolvedValueOnce([mockPagePopularity])
+    vi.spyOn(logDB, 'getVisitorCount').mockResolvedValueOnce([mockVisitorCount])
+    vi.spyOn(logDB, 'getPagePopularity').mockResolvedValueOnce([
+      mockPagePopularity
+    ])
 
     const response = await getVisitorAnalyticsRequest(5)
     expect(response.status).toBe(200)
@@ -41,9 +41,8 @@ describe('Analytics Route', () => {
   })
 
   it('should return 500 if database throws an error', async () => {
-
     setupDatabaseError(db)
-    
+
     const response = await getVisitorAnalyticsRequest(25)
     expect(response.status).toBe(500)
     expect(response.body).toEqual({ error: 'Internal server error' })
