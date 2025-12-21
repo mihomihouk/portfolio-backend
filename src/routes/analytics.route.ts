@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getUserActivityLog } from '../controllers/analytics'
+import { getUserActivityLog } from '../controllers/log'
 
 const router = Router()
 
