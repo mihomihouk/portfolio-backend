@@ -5,9 +5,10 @@ import { analyticsRouter } from './routes'
 import { errorHandler } from './middlewares/error-handler'
 
 const app = express()
-const port = process.env.PORT || 4000
 
-app.set('trust proxy', true)
+app.set('trust proxy', 1)
+
+const port = process.env.PORT || 4000
 
 const whiteList = (process.env.ALLOWED_ORIGINS || '')
   .split(',')
