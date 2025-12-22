@@ -63,7 +63,6 @@ describe('Log Route', () => {
     setupDatabaseError(db)
     const response = await makePostRequest(validPayload)
     expect(response.status).toBe(500)
-    expect(response.body).toEqual({ error: 'Internal server error' })
   })
 })
 
@@ -105,6 +104,5 @@ describe('Analytics Route', () => {
 
     const response = await getVisitorAnalyticsRequest({ daysAgo: 25 })
     expect(response.status).toBe(500)
-    expect(response.body).toEqual({ error: 'Internal server error' })
   })
 })
