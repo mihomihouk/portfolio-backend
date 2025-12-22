@@ -47,10 +47,15 @@ DTOs define clear, typed contracts at API boundaries and between layers.
 
 Validation is performed via middleware before reaching controllers or services.
 
-## Error Handling
+### Error Handling
 
 - Centralised error handling middleware
 - Custom error classes
+
+### Rate Limiting
+
+- Applied to sensitive endpoints to mitigate the risk of DOS attacks
+- Configured per IP to limit the number of requests within a time window
 
 ## Main Functions
 
