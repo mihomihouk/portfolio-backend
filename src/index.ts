@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import logRouter from './routes/log.route'
 import { analyticsRouter } from './routes'
+import { errorHandler } from './middlewares/error-handler'
 
 const app = express()
 const port = process.env.PORT || 4000
@@ -27,12 +28,13 @@ app.use(
 
 app.use(express.json())
 
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.send('Backend API is running')
 })
 
 app.use('/api/log', logRouter)
 app.use('/api/visitor-analytics', analyticsRouter)
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`)

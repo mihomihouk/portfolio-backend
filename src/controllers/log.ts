@@ -1,35 +1,41 @@
 import { LogEventInput } from '../dtos/log.dto'
+import { HttpError } from '../errors/http-error'
 import { LogRepository } from '../repositories/log.repository'
 import { LogService } from '../services/log.service'
-import { Request, Response } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 const logService = new LogService(new LogRepository())
 
-export async function logUserActivity(req: Request, res: Response) {
+export async function logUserActivity(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const data: LogEventInput = req.body
     const success = await logService.logUserActivity(data, req.ip)
 
     if (!success) {
-      return res.status(403).json({ error: 'Bot user detected' })
+      throw new HttpError(403, 'Bot user detected')
     }
 
     return res.status(200).json({ ok: true })
   } catch (err) {
-    console.error('Error logging event:', err)
-    return res.status(500).json({ error: 'Internal server error' })
+    next(err)
   }
 }
 
-export async function getUserActivityLog(req: Request, res: Response) {
+export async function getUserActivityLog(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const [visitorCount, pagePopularity] = await logService.getUserActivityLog(
       Number(req.query.daysAgo) || 30
     )
-
     return res.status(200).json({ visitorCount, pagePopularity })
   } catch (err) {
-    console.error(`Error getting visitor analytics:`, err)
-    return res.status(500).json({ error: 'Internal server error' })
+    next(err)
   }
 }
