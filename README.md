@@ -47,6 +47,11 @@ DTOs define clear, typed contracts at API boundaries and between layers.
 
 Validation is performed via middleware before reaching controllers or services.
 
+## Error Handling
+
+- Centralised error handling middleware
+- Custom error classes
+
 ## Main Functions
 
 - Event logging API
