@@ -6,7 +6,11 @@ import { NextFunction, Request, Response } from 'express'
 
 const logService = new LogService(new LogRepository())
 
-export async function logUserActivity(req: Request, res: Response, next: NextFunction) {
+export async function logUserActivity(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const data: LogEventInput = req.body
     const success = await logService.logUserActivity(data, req.ip)
@@ -21,7 +25,11 @@ export async function logUserActivity(req: Request, res: Response, next: NextFun
   }
 }
 
-export async function getUserActivityLog(req: Request, res: Response, next: NextFunction) {
+export async function getUserActivityLog(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   try {
     const [visitorCount, pagePopularity] = await logService.getUserActivityLog(
       Number(req.query.daysAgo) || 30

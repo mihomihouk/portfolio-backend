@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import logRouter from './routes/log.route'
 import { analyticsRouter } from './routes'
-import {errorHandler} from './middlewares/error-handler'
+import { errorHandler } from './middlewares/error-handler'
 
 const app = express()
 const port = process.env.PORT || 4000
