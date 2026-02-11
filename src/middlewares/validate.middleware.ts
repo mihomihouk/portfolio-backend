@@ -9,7 +9,7 @@ export function validateBody(schema: z.ZodObject<any>) {
         .status(400)
         .json({ succuss: false, error: z.prettifyError(result.error) })
     } else {
-      result.data
+      req.body =result.data
       next()
     }
   }
